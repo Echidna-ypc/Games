@@ -188,10 +188,10 @@ function checkWin() {
 
   const status = document.getElementById("status");
   if (goatsOnBoard < 5) {
-    status.textContent = "ЁЯРп Tigers win! All goats are captured.";
+    status.textContent = "🐯 Tigers win! All goats are captured.";
     canvas.removeEventListener("click", handleClick);
   } else if (movableTigers === 0) {
-    status.textContent = "ЁЯРР Goats win! Tigers are blocked.";
+    status.textContent = "🐐 Goats win! Tigers are blocked.";
     canvas.removeEventListener("click", handleClick);
   }
 }
