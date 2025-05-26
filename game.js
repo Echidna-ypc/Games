@@ -145,8 +145,11 @@ function handleClick(e) {
     }
   }
 
+  
+  checkWin();
   updateStatus();
   drawBoard();
+
 }
 
 function updateStatus() {
@@ -157,3 +160,38 @@ function updateStatus() {
 canvas.addEventListener("click", handleClick);
 drawBoard();
 updateStatus();
+function checkWin() {
+  let movableTigers = 0;
+  for (let x = 0; x < size; x++) {
+    for (let y = 0; y < size; y++) {
+      if (board[x][y] === 'tiger') {
+        for (let dx = -1; dx <= 1; dx++) {
+          for (let dy = -1; dy <= 1; dy++) {
+            if (dx === 0 && dy === 0) continue;
+            let nx = x + dx;
+            let ny = y + dy;
+            let jx = x + 2 * dx;
+            let jy = y + 2 * dy;
+            if (nx >= 0 && ny >= 0 && nx < size && ny < size && board[nx][ny] === null) {
+              movableTigers++;
+            } else if (
+              jx >= 0 && jy >= 0 && jx < size && jy < size &&
+              board[nx][ny] === 'goat' && board[jx][jy] === null
+            ) {
+              movableTigers++;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  const status = document.getElementById("status");
+  if (goatsOnBoard < 5) {
+    status.textContent = "ЁЯРп Tigers win! All goats are captured.";
+    canvas.removeEventListener("click", handleClick);
+  } else if (movableTigers === 0) {
+    status.textContent = "ЁЯРР Goats win! Tigers are blocked.";
+    canvas.removeEventListener("click", handleClick);
+  }
+}
